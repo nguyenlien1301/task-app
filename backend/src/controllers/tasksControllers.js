@@ -2,7 +2,7 @@
 import Task from "../models/Task.js";
 
 export const getAllTasks = async (request, response) => {
-  const { filter = 0 } = request.query;
+  const { filter = "today" } = request.query;
   const now = new Date();
   let startDate;
   switch (filter) {
@@ -54,7 +54,7 @@ export const getAllTasks = async (request, response) => {
 export const createTask = async (req, res) => {
   try {
     const { title } = req.body;
-    const task = await Task.create({ title });
+    const task = new Task({ title });
     const newTask = await task.save();
     res.status(201).json(newTask);
   } catch (error) {
